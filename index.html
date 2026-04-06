@@ -3,153 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>봄은 슬프다 - 구윤재</title>
+    <title>봄은 슬프다 - 구윤재 (Dynamic)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --petal-color: #ffdae0;
+        }
+
         body {
             font-family: 'Noto Serif KR', serif;
-            background-color: #fdfbfb;
-            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
             color: #2d3436;
+            overflow: hidden; /* 꽃잎이 많아지므로 스크롤 방지 */
+            position: relative;
+        }
+
+        /* 등장 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .poem-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            border-radius: 2.5rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             width: 100%;
-            overflow: hidden;
+            padding: 4rem 2rem;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .poem-header {
-            text-align: center;
-            padding: 4rem 2rem 2rem;
+            z-index: 20; /* 꽃잎보다 위에 위치 */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            animation: fadeInUp 1.5s ease-out forwards;
+            perspective: 1000px;
         }
 
         .poem-title {
             font-family: 'Nanum Myeongjo', serif;
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 700;
             color: #1a1a1a;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .poem-author {
             font-size: 1.25rem;
             color: #636e72;
-            letter-spacing: 0.2em;
-            margin-bottom: 3rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 4rem;
+            text-align: center;
         }
 
         .poem-content {
-            padding: 0 4rem 4rem;
-            line-height: 2.2;
-            font-size: 1.35rem;
+            line-height: 2.5;
+            font-size: 1.4rem;
             text-align: center;
         }
 
         .poem-stanza {
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
+            transition: transform 0.3s ease;
         }
 
         .highlight {
             color: #d63031;
             font-weight: 700;
+            position: relative;
+            display: inline-block;
         }
 
-        .decoration-petal {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #fab1a0;
-            opacity: 0.3;
-            border-radius: 50% 0 50% 50%;
-            filter: blur(1px);
+        /* 흩날리는 꽃잎 애니메이션 */
+        .petal {
+            position: fixed;
+            background-color: var(--petal-color);
+            border-radius: 150% 0 150% 150%;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.8;
+            filter: blur(0.3px);
+            will-change: transform, opacity;
         }
 
-        /* 수채화 느낌의 배경 장식 */
-        .watercolor-bg {
-            position: absolute;
-            top: -10%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255, 204, 204, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
-            z-index: -1;
+        @keyframes falling {
+            0% {
+                transform: translate(0, -10%) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            15% { opacity: 0.9; }
+            85% { opacity: 0.9; }
+            100% {
+                transform: translate(250px, 110vh) rotate(1080deg) scale(0.5);
+                opacity: 0;
+            }
         }
 
-        .watercolor-bg-bottom {
-            position: absolute;
-            bottom: -10%;
-            left: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(178, 190, 195, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
-            z-index: -1;
+        /* 배경 수채화 효과 애니메이션 */
+        .watercolor {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: drift 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes drift {
+            from { transform: translate(-15%, -15%); }
+            to { transform: translate(15%, 15%); }
         }
 
         @media (max-width: 640px) {
-            .poem-title { font-size: 2.5rem; }
-            .poem-content { padding: 0 2rem 3rem; font-size: 1.15rem; }
+            .poem-card { padding: 3rem 1.5rem; }
+            .poem-content { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poem-card">
-        <div class="watercolor-bg"></div>
-        <div class="watercolor-bg-bottom"></div>
+    <!-- 배경 수채화 장식 -->
+    <div class="watercolor w-[500px] h-[500px] bg-pink-200 top-[-100px] left-[-100px]"></div>
+    <div class="watercolor w-[400px] h-[400px] bg-blue-100 bottom-[-100px] right-[-100px]" style="animation-delay: -7s;"></div>
 
-        <header class="poem-header">
+    <div class="poem-card">
+        <header>
             <h1 class="poem-title">봄은 슬프다</h1>
             <p class="poem-author">구윤재</p>
         </header>
 
         <article class="poem-content">
-            <div class="poem-stanza">
+            <div class="poem-stanza" style="animation: fadeInUp 1s ease-out 0.5s both;">
                 봄은 <span class="highlight">막장드라마</span>이다<br>
                 눈물이 나기 때문이다
             </div>
 
-            <div class="poem-stanza">
+            <div class="poem-stanza" style="animation: fadeInUp 1s ease-out 1s both;">
                 눈물이 난다고 슬픈 건 아니다<br>
                 눈물이 난다는 사실이<br>
                 슬픈 것이다
             </div>
 
-            <div class="poem-stanza">
+            <div class="poem-stanza" style="animation: fadeInUp 1s ease-out 1.5s both;">
                 다른 친구들이 우는 것도 슬프다<br>
                 그 고통을 알기 때문이다
             </div>
 
-            <div class="poem-stanza" style="margin-top: 4rem; opacity: 0.8; font-style: italic;">
+            <div class="poem-stanza italic opacity-60" style="animation: fadeInUp 1s ease-out 2s both; margin-top: 5rem;">
                 봄은 슬프다.
             </div>
         </article>
-
-        <!-- 장식용 꽃잎들 -->
-        <div class="decoration-petal" style="top: 15%; left: 10%; transform: rotate(15deg);"></div>
-        <div class="decoration-petal" style="top: 40%; right: 5%; transform: rotate(45deg); background: #ff7675;"></div>
-        <div class="decoration-petal" style="bottom: 20%; left: 5%; transform: rotate(-20deg);"></div>
     </div>
 
-    <!-- 이미지 섹션 (작게 하단 배치) -->
-    <div class="fixed bottom-8 right-8 w-32 h-32 opacity-20 hover:opacity-50 transition-opacity">
+    <script>
+        // 꽃잎 생성 스크립트
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // 더 다양하고 역동적인 속성 설정
+            const sizeNum = Math.random() * 20 + 8; // 크기 다양화
+            const size = sizeNum + 'px';
+            const left = (Math.random() * 120 - 10) + 'vw'; // 화면 밖에서도 시작
+            const duration = Math.random() * 4 + 3 + 's'; // 더 빠르게 떨어짐
+            const delay = Math.random() * 2 + 's';
+            const blur = Math.random() * 2 + 'px'; // 거리감 표현을 위한 블러
+            
+            petal.style.width = size;
+            petal.style.height = size;
+            petal.style.left = left;
+            petal.style.top = '-20px';
+            petal.style.filter = `blur(${blur})`;
+            petal.style.animation = `falling ${duration} linear ${delay} infinite`;
+            
+            // 색상 팔레트 확장 (다양한 분홍/흰색 톤)
+            const colors = ['#ffdae0', '#fbc2eb', '#fff5f5', '#fad0c4', '#ffdde1', '#ffffff'];
+            petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(petal);
+            
+            // 메모리 관리를 위해 일정 시간 후 제거
+            setTimeout(() => {
+                petal.remove();
+            }, (parseFloat(duration) + parseFloat(delay)) * 1000);
+        }
+
+        // 초기 꽃잎 대량 생성
+        for(let i = 0; i < 40; i++) {
+            createPetal();
+        }
         
-    </div>
+        // 생성 간격을 좁혀서 '아주 많이' 내리게 설정
+        setInterval(createPetal, 150);
 
+        // 마우스 움직임에 따른 카드 반응 효과
+        const card = document.querySelector('.poem-card');
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        // 마우스 상호작용 부드럽게
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'none';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+    </script>
 </body>
 </html>
