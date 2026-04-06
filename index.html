@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봄은 슬프다 - 구윤재</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Serif KR', serif;
+            background-color: #fdfbfb;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #2d3436;
+        }
+
+        .poem-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .poem-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .poem-title {
+            font-family: 'Nanum Myeongjo', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.05em;
+        }
+
+        .poem-author {
+            font-size: 1.25rem;
+            color: #636e72;
+            letter-spacing: 0.2em;
+            margin-bottom: 3rem;
+        }
+
+        .poem-content {
+            padding: 0 4rem 4rem;
+            line-height: 2.2;
+            font-size: 1.35rem;
+            text-align: center;
+        }
+
+        .poem-stanza {
+            margin-bottom: 3rem;
+        }
+
+        .highlight {
+            color: #d63031;
+            font-weight: 700;
+        }
+
+        .decoration-petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fab1a0;
+            opacity: 0.3;
+            border-radius: 50% 0 50% 50%;
+            filter: blur(1px);
+        }
+
+        /* 수채화 느낌의 배경 장식 */
+        .watercolor-bg {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 204, 204, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+        }
+
+        .watercolor-bg-bottom {
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(178, 190, 195, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+        }
+
+        @media (max-width: 640px) {
+            .poem-title { font-size: 2.5rem; }
+            .poem-content { padding: 0 2rem 3rem; font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poem-card">
+        <div class="watercolor-bg"></div>
+        <div class="watercolor-bg-bottom"></div>
+
+        <header class="poem-header">
+            <h1 class="poem-title">봄은 슬프다</h1>
+            <p class="poem-author">구윤재</p>
+        </header>
+
+        <article class="poem-content">
+            <div class="poem-stanza">
+                봄은 <span class="highlight">막장드라마</span>이다<br>
+                눈물이 나기 때문이다
+            </div>
+
+            <div class="poem-stanza">
+                눈물이 난다고 슬픈 건 아니다<br>
+                눈물이 난다는 사실이<br>
+                슬픈 것이다
+            </div>
+
+            <div class="poem-stanza">
+                다른 친구들이 우는 것도 슬프다<br>
+                그 고통을 알기 때문이다
+            </div>
+
+            <div class="poem-stanza" style="margin-top: 4rem; opacity: 0.8; font-style: italic;">
+                봄은 슬프다.
+            </div>
+        </article>
+
+        <!-- 장식용 꽃잎들 -->
+        <div class="decoration-petal" style="top: 15%; left: 10%; transform: rotate(15deg);"></div>
+        <div class="decoration-petal" style="top: 40%; right: 5%; transform: rotate(45deg); background: #ff7675;"></div>
+        <div class="decoration-petal" style="bottom: 20%; left: 5%; transform: rotate(-20deg);"></div>
+    </div>
+
+    <!-- 이미지 섹션 (작게 하단 배치) -->
+    <div class="fixed bottom-8 right-8 w-32 h-32 opacity-20 hover:opacity-50 transition-opacity">
+        
+    </div>
+
+</body>
+</html>
